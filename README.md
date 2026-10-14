@@ -2,12 +2,13 @@
 
 Oura Ring のデータを取得し、Notionの「OuraRing」配下の5つのDB（日次サマリー・睡眠区間・セッション・ワークアウト・タグ）へ記録する、アプリケーションスキル。
 
-Oura API側の判断（トークンの扱い・境界日の取りこぼし・心拍の取り方・数日遅れの確定など）は [oura-api-generic-logic](https://github.com/junyatakechi/oura-api-generic-logic) に、Notionの呼び方は [notion-cli-generic-logic](https://github.com/junyatakechi/notion-cli-generic-logic) に委ね、どちらの道具も部品として呼ぶ。このスキルが持つのは、記録先のDB・列名・Ouraの項目との対応と手順だけ。
+Oura API側の判断（トークンの扱い・境界日の取りこぼし・心拍の取り方・数日遅れの確定など）は [oura-api-generic-logic](https://github.com/junyatakechi/oura-api-generic-logic) に、Notionの呼び方は [notion-cli-generic-logic](https://github.com/junyatakechi/notion-cli-generic-logic) に委ね、どちらの道具も部品として呼ぶ。このスキルが持つのは、記録先のDB・列名・Ouraの項目との対応と手順。まだ切り出していない判断は `references/` に置く。
 
 ## 中身
 
-- [SKILL.md](SKILL.md): 判断の委任表と、設定の確認・同期・報告の手順
-- [references/notion-db.md](references/notion-db.md): 記録先のDBと列
+- [SKILL.md](SKILL.md): 判断の委任表・使用するリポジトリ表と、設定の確認・同期・報告の手順
+- [conventions/notion-db.md](conventions/notion-db.md): 記録先のDBと列（この環境での記録の取り決め）
+- [references/](references/): まだ切り出していない判断。1判断1ファイル
 - [scripts/sync_oura_to_notion.py](scripts/sync_oura_to_notion.py): Ouraから取り、Notionへ記録する
 
 ## 必要なもの
@@ -16,7 +17,7 @@ Oura API側の判断（トークンの扱い・境界日の取りこぼし・心
 - [oura-api-generic-logic](https://github.com/junyatakechi/oura-api-generic-logic)（Ouraの判断と道具）
 - [notion-cli-generic-logic](https://github.com/junyatakechi/notion-cli-generic-logic)（Notionの判断と道具）
 - 3つのスキルは、同じ `skills/` フォルダに並べて置く（スクリプトが隣のフォルダから道具を読む）
-- 記録先のNotionのDB 5つ（列は [references/notion-db.md](references/notion-db.md)）
+- 記録先のNotionのDB 5つ（列は [conventions/notion-db.md](conventions/notion-db.md)）
 
 ## インストール
 

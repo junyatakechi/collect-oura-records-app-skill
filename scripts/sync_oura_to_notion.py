@@ -45,7 +45,7 @@ DS = EnvDataSources("oura-collection-app", "OURA_COLLECTION",
 
 DATE_COLUMN = "対象日時"
 
-# 記録先の列名と型。references/notion-db.md が説明で、ここが正。
+# 記録先の列名と型。conventions/notion-db.md が説明で、ここが正。
 # 列を変えたらNotion側と同時にここを直す(notion-cli-generic-logic のスキーマの変更の判断)。
 COLUMNS = {
     "daily": {
@@ -226,7 +226,7 @@ def build_workout(record):
 
 
 def build_tag(record, kind):
-    """「時刻」はdate型1列の期間(start+end)。理由は references/notion-db.md。"""
+    """「時刻」はdate型1列の期間(start+end)。理由は references/time-columns.md。"""
     t = R.normalize_tag(record, kind)
     label = "enhanced_tag" if kind == "enhanced_tag" else "tag(旧)"
     title_text = t["content"] or (t["codes"][0] if t["codes"] else label)

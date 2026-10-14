@@ -16,7 +16,7 @@ Notionの「OuraRing」ページ配下の5つ。URLは環境ファイル `~/.cla
 | Oura タグ | `OURA_COLLECTION_DB_TAG_URL` | 1件 | `enhanced_tag`・`tag` | 同上 |
 
 - 既にあったときの扱いは、oura-api-generic-logic のレコードの同一性・データが確定する時期の判断に従う。
-- `ring_configuration`・`personal_info` はDBを作っていない。変わることが少ないので、要るときに oura-api-generic-logic の `oura_api.py` で取る。
+- `ring_configuration`・`personal_info` はDBを作っていない。理由は、まだ切り出していない判断（[references/static-endpoints.md](../references/static-endpoints.md)）にある。
 
 ## 列
 
@@ -33,12 +33,9 @@ Notionの「OuraRing」ページ配下の5つ。URLは環境ファイル `~/.cla
 - 個別の列が全部そろっているわけではない。個別の列に無い項目は、`生データ` の列（長大な時系列は要約済み）で追う。
 - 列の名前に「_秒」が付く列は秒のまま。「睡眠_○○スコア」は0〜100のスコアで、時間ではない。読み方は oura-api-generic-logic の睡眠区間と日次の睡眠の読み方の判断に従う。
 
-## 時間を持つ列の形（2026-08-10決定）
+## 時間を持つ列の形
 
-睡眠区間・セッション・ワークアウトは**開始・終了の2列**、タグだけ**date型1列の期間（start+end）**で持つ。
-
-- 前者は必ず期間を持つ活動なので、終了だけでのソート・フィルタが効く2列が自然。
-- タグは瞬間タグと期間タグが混在していて、実データでは大半の行が終了を持たない。専用の終了列を作ると大半が空欄になり、「まだ埋めていない」のか「元々終わりが無い」のか区別できなくなる。1列の期間にして「endが無い＝瞬間タグ」と読めるようにした。
+睡眠区間・セッション・ワークアウトは開始・終了の2列、タグだけdate型1列の期間で持つ。なぜこの形かは、まだ切り出していない判断（[references/time-columns.md](../references/time-columns.md)）にある。
 
 ## 記録の限界
 
