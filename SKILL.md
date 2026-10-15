@@ -1,8 +1,8 @@
 ---
 name: oura-collection-app
-description: Oura Ring のデータ（睡眠・活動・準備度・回復力・心血管年齢・SpO2・ストレス・VO2Max・心拍・睡眠区間・セッション・ワークアウト・タグ）を取得し、Notionの「OuraRing」配下の5つのDBへ記録するアプリケーションスキル。「Ouraのデータを同期して」「Ouraの睡眠データを記録して」「Oura Ringの記録を更新して」のように言われたときや、評価のスキル（diet-process-evaluation-app など）から評価の前の最新化として頼まれたときに使う。Oura API側の判断（トークン・境界日・心拍・生データの要約・データの確定の遅れ・レコードの同一性・タグの2形式）は外部の generic-logic（oura-api-generic-logic）に、Notionの呼び方は notion-cli-generic-logic に委ね、どちらの道具も写さず自分で呼ぶ。切り出した判断はこのスキルに持たず、判断の委任表の判断先の判断ファイルに聞く。記録先のDB・列名・Ouraの項目との対応と手順を持ち、まだ切り出していない判断は references に置く。取得したデータの解釈・評価はしない。
+description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
   repository: "https://github.com/junyatakechi/oura-collection-app"
 ---
 
