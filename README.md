@@ -37,7 +37,7 @@ git clone https://github.com/junyatakechi/oura-collection-app.git ~/.claude/skil
 
 1. oura-api-generic-logic の README の「セットアップ」で、Ouraの認証情報を用意する。
 2. notion-cli-generic-logic の README の「セットアップ」で、Notionのトークンを用意し、記録先の5つのDBにIntegrationを接続する。
-3. `.env.example` を `~/.claude-skills-env/oura-collection-app.env` にコピーし、値を埋める。
+3. `.env.example` のキーを、プロジェクトのフォルダ直下（Claude Code を起動するフォルダ）の `.env` に足し、値を埋める。`.env` はプロジェクトのスキルで共有する。
 
 | キー | 中身 |
 |---|---|
@@ -50,8 +50,8 @@ git clone https://github.com/junyatakechi/oura-collection-app.git ~/.claude/skil
 4. 書き込まずに確かめる。
 
    ```bash
-   cd ~/.claude/skills/oura-collection-app
-   uv run scripts/sync_oura_to_notion.py --dry-run
+   cd <プロジェクトのフォルダ>   # .env のあるフォルダ
+   uv run ~/.claude/skills/oura-collection-app/scripts/sync_oura_to_notion.py --dry-run
    ```
 
 ## 使い方

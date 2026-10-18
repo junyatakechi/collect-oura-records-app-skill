@@ -5,7 +5,7 @@
 
 ## DB
 
-Notionの「OuraRing」ページ配下の5つ。URLは環境ファイル `~/.claude-skills-env/oura-collection-app.env` にある。
+Notionの「OuraRing」ページ配下の5つ。URLは起動フォルダの `.env` にある。
 
 | DB | URLのキー | 1件の単位 | Ouraのエンドポイント | 既にあったら |
 |---|---|---|---|---|

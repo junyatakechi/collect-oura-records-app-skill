@@ -39,8 +39,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 # ---------------------------------------------------------------- 記録先(導入先の環境)
-# DBのURLは ~/.claude-skills-env/oura-collection-app.env の OURA_COLLECTION_DB_<KEY>_URL。
-DS = EnvDataSources("oura-collection-app", "OURA_COLLECTION",
+# DBのURLは起動フォルダの .env(環境変数が優先)の OURA_COLLECTION_DB_<KEY>_URL。
+DS = EnvDataSources("OURA_COLLECTION",
                     ("daily", "sleep", "session", "workout", "tag"))
 
 DATE_COLUMN = "対象日時"
@@ -338,7 +338,7 @@ def main():
     parser.add_argument("--start-date", help="YYYY-MM-DD")
     parser.add_argument("--end-date", help="YYYY-MM-DD")
     parser.add_argument("--dry-run", action="store_true", help="Notionには書き込まず件数のみ表示")
-    parser.add_argument("--env-file", help="Oura認証情報ファイル(既定は oura-api-generic-logic の環境ファイル)")
+    parser.add_argument("--env-file", help="Oura認証情報の .env(既定は起動フォルダの .env)")
     args = parser.parse_args()
 
     if args.date:

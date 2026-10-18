@@ -90,18 +90,18 @@ Ouraの癖（使い捨てのトークン・境界日の取りこぼし・心拍�
 
 | 合図 | 足りないもの |
 |---|---|
-| `~/.claude-skills-env/oura-collection-app.env に OURA_COLLECTION_DB_..._URL が無い` | 記録先のDBのURL |
+| `環境変数にも <起動フォルダ>/.env にも OURA_COLLECTION_DB_..._URL が無い` | 記録先のDBのURL |
 | `client_id/client_secret is missing`・`refresh_token is missing`・`Oura token endpoint error` | Ouraの認証情報（oura-api-generic-logic の認証とトークンの判断に聞く） |
-| `Notion token file not found`・`NOTION_TOKEN is not set`・記録先のDBで404 | Notionのトークン、または記録先のDBへのIntegrationの接続 |
+| `NOTION_TOKEN is not set`・記録先のDBで404 | Notionのトークン、または記録先のDBへのIntegrationの接続 |
 
 ### 2. 同期する
 
 ```bash
-cd <skill-dir>
-uv run scripts/sync_oura_to_notion.py                      # 前日分を同期
-uv run scripts/sync_oura_to_notion.py --date 2026-05-16     # 指定日のみ
-uv run scripts/sync_oura_to_notion.py --start-date 2026-05-01 --end-date 2026-05-16
-uv run scripts/sync_oura_to_notion.py --dry-run             # 書き込まず件数だけ
+# プロジェクトのフォルダ（.env のある起動フォルダ）から起動する。スキルのフォルダへ cd しない
+uv run <skill-dir>/scripts/sync_oura_to_notion.py                      # 前日分を同期
+uv run <skill-dir>/scripts/sync_oura_to_notion.py --date 2026-05-16     # 指定日のみ
+uv run <skill-dir>/scripts/sync_oura_to_notion.py --start-date 2026-05-01 --end-date 2026-05-16
+uv run <skill-dir>/scripts/sync_oura_to_notion.py --dry-run             # 書き込まず件数だけ
 ```
 
 - **何日の分を取るか。** 指定が無ければ前日分。ユーザーや依頼元のスキルが期間を言ったら、その期間を渡す。今日の行（昨夜の睡眠）が要るときは `--date` で今日を明示する。根拠は oura-api-generic-logic のデータが確定する時期の判断。
