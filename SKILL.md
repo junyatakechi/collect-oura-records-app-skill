@@ -2,7 +2,7 @@
 name: oura-collection-app
 description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.2.1"
+  version: "0.2.2"
   repository: "https://github.com/junyatakechi/oura-collection-app"
 ---
 
@@ -42,7 +42,7 @@ Ouraの癖（使い捨てのトークン・境界日の取りこぼし・心拍�
 | Ouraの道具を、どの入口から呼ぶか | `oura-api-generic-logic/references/client-usage.md` | 呼ぶ関数の順と、呼び出し側で書かないこと（道具の使い方） |
 | 期間をどう指定し、対象日のレコードをどう拾うか | `oura-api-generic-logic/references/date-boundary.md` | 取得範囲の出し方と、対象日のレコードを返す関数（道具の使い方） |
 | 心拍を、どう取り、日ごとにどう集計するか | `oura-api-generic-logic/references/heartrate.md` | 取り方と、集計の関数（道具の使い方） |
-| 生データを、どう残すか | `oura-api-generic-logic/references/raw-data.md` | 残す形と、要約の有無（道具の使い方） |
+| 長大な時系列を、どう要約して取るか | `oura-api-generic-logic/references/raw-data.md` | 要約の仕方（道具の使い方） |
 | 何日の分を、いつ取り、記録済みの日次をどうするか | `oura-api-generic-logic/references/data-latency.md` | 既定の対象日、日次を上書きするか、空の項目の読み方 |
 | 何で重複を判定し、既にあったらどうするか | `oura-api-generic-logic/references/record-identity.md` | エンドポイントごとの一意キーと、既にあったときの扱い |
 | タグの2つの形式を、どう記録するか | `oura-api-generic-logic/references/tags.md` | 形をそろえる関数と、終了時刻の扱い（道具の使い方） |
@@ -62,6 +62,7 @@ Ouraの癖（使い捨てのトークン・境界日の取りこぼし・心拍�
 | 一部のエンドポイントや日の取得に失敗したとき、続けるか止めるか | `oura-collection-app/references/partial-failure.md` | 続ける範囲と、終了の仕方 |
 | 時間を持つ記録を、どの列の形で持つか | `oura-collection-app/references/time-columns.md` | DBごとの列の形 |
 | 変わることが少ないデータ（`ring_configuration`・`personal_info`）を、DBに記録するか | `oura-collection-app/references/static-endpoints.md` | 記録する / しない と、要るときの取り方 |
+| 生データを、記録にどう残すか | `oura-collection-app/references/raw-data.md` | 残す形と、要約するか |
 
 - このスキルの判断ファイルは、このスキルが自分で読んで当てはめる。
 - 齟齬が見つかったら、ここが切り出す候補になる。切り出すときは、判断ファイルをロジックスキルへ移し、行を上の表へ移して判断先を書き換える。
@@ -72,7 +73,7 @@ Ouraの癖（使い捨てのトークン・境界日の取りこぼし・心拍�
 
 | スキル名 | リポジトリのURL | 版 |
 |---|---|---|
-| `oura-api-generic-logic` | https://github.com/junyatakechi/oura-api-generic-logic | 0.1.x |
+| `oura-api-generic-logic` | https://github.com/junyatakechi/oura-api-generic-logic | 0.2.x |
 | `notion-cli-generic-logic` | https://github.com/junyatakechi/notion-cli-generic-logic | 0.2.x |
 
 - 版は、そのスキルの版（`metadata.version`）の先頭2桁に、`.x` を付けた形（例：`0.2.x`）。3桁目はどの版でもよいことを表す。3桁目だけが上がった版は、この表を直さずにそのまま使う。3桁目は、呼び出し側が何も合わせなくてよい変更だけで上がるため。

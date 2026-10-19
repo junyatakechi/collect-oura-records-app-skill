@@ -11,7 +11,7 @@
   uv run scripts/sync_oura_to_notion.py --dry-run             # Notionには書き込まず件数だけ表示
   uv run scripts/sync_oura_to_notion.py --env-file <path>     # Oura認証情報ファイルを指定
 
-**判断はこのスキルに持たない。** Oura API側の事情(トークン・境界日・心拍・要約・
+**判断はこのスキルに持たない。** Oura API側の事情(トークン・境界日・心拍・
 確定の遅れ・同一性・タグの2形式)は oura-api-generic-logic の判断と道具に、
 Notionの呼び方は notion-cli-generic-logic の判断と道具に従う。どちらの道具も写さず、
 importして呼ぶ。このスキルが持つのは、導入先の環境(記録先のDB・列名・Ouraの項目との対応)と手順だけ。
@@ -358,8 +358,9 @@ def main():
     fetch_start, fetch_end = R.padded_range(start, end)
     log(f"Oura APIから {fetch_start}〜{fetch_end} のデータを一括取得中...")
     warn = lambda key, e: log(f"  [警告] {key} の取得に失敗: {e}")  # noqa: E731
-    daily_data = fetch_many(DAILY_ENDPOINTS, token, fetch_start, fetch_end, on_error=warn)
-    interval_data = fetch_many(INTERVAL_ENDPOINTS, token, fetch_start, fetch_end, on_error=warn)
+    # 生データの列はrich_textなので、長大な時系列は要約して取る(references/raw-data.md)。
+    daily_data = fetch_many(DAILY_ENDPOINTS, token, fetch_start, fetch_end, full=False, on_error=warn)
+    interval_data = fetch_many(INTERVAL_ENDPOINTS, token, fetch_start, fetch_end, full=False, on_error=warn)
     log("一括取得完了。日別の同期を開始します。")
 
     recorded = RecordedIds()
