@@ -6,7 +6,7 @@ Oura API側の判断（トークンの扱い・境界日の取りこぼし・心
 
 ## 中身
 
-- [SKILL.md](SKILL.md): 判断の委任表・使用するリポジトリ表と、設定の確認・同期・報告の手順
+- [SKILL.md](SKILL.md): 判断の委任表と、設定の確認・同期・報告の手順
 - [conventions/notion-db.md](conventions/notion-db.md): 記録先のDBと列（この環境での記録の取り決め）
 - [references/](references/): まだ切り出していない判断。1判断1ファイル
 - [scripts/sync_oura_to_notion.py](scripts/sync_oura_to_notion.py): Ouraから取り、Notionへ記録する
