@@ -1,8 +1,8 @@
-# oura-collection-app
+# oura-collection-app-skill
 
 Oura Ring のデータを取得し、Notionの「OuraRing」配下の5つのDB（日次サマリー・睡眠区間・セッション・ワークアウト・タグ）へ記録する、アプリケーションスキル。
 
-Oura API側の判断（トークンの扱い・境界日の取りこぼし・心拍の取り方・数日遅れの確定など）は [oura-api-generic-logic](https://github.com/junyatakechi/oura-api-generic-logic) に、Notionの呼び方は [notion-cli-generic-logic](https://github.com/junyatakechi/notion-cli-generic-logic) に委ね、どちらの道具も部品として呼ぶ。このスキルが持つのは、記録先のDB・列名・Ouraの項目との対応と手順。まだ切り出していない判断は `references/` に置く。
+Oura API側の判断（トークンの扱い・境界日の取りこぼし・心拍の取り方・数日遅れの確定など）は [oura-api-generic-logic-skill](https://github.com/junyatakechi/oura-api-generic-logic-skill) に、Notionの呼び方は [notion-cli-generic-logic-skill](https://github.com/junyatakechi/notion-cli-generic-logic-skill) に委ね、どちらの道具も部品として呼ぶ。このスキルが持つのは、記録先のDB・列名・Ouraの項目との対応と手順。まだ切り出していない判断は `references/` に置く。
 
 ## 中身
 
@@ -14,29 +14,29 @@ Oura API側の判断（トークンの扱い・境界日の取りこぼし・心
 ## 必要なもの
 
 - [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) と [uv](https://docs.astral.sh/uv/)
-- [oura-api-generic-logic](https://github.com/junyatakechi/oura-api-generic-logic)（Ouraの判断と道具）
-- [notion-cli-generic-logic](https://github.com/junyatakechi/notion-cli-generic-logic)（Notionの判断と道具）
+- [oura-api-generic-logic-skill](https://github.com/junyatakechi/oura-api-generic-logic-skill)（Ouraの判断と道具）
+- [notion-cli-generic-logic-skill](https://github.com/junyatakechi/notion-cli-generic-logic-skill)（Notionの判断と道具）
 - 3つのスキルは、同じ `skills/` フォルダに並べて置く（スクリプトが隣のフォルダから道具を読む）
 - 記録先のNotionのDB 5つ（列は [conventions/notion-db.md](conventions/notion-db.md)）
 
 ## インストール
 
 ```bash
-git clone https://github.com/junyatakechi/oura-api-generic-logic.git ~/.claude/skills/oura-api-generic-logic
+git clone https://github.com/junyatakechi/oura-api-generic-logic-skill.git ~/.claude/skills/oura-api-generic-logic-skill
 ```
 
 ```bash
-git clone https://github.com/junyatakechi/notion-cli-generic-logic.git ~/.claude/skills/notion-cli-generic-logic
+git clone https://github.com/junyatakechi/notion-cli-generic-logic-skill.git ~/.claude/skills/notion-cli-generic-logic-skill
 ```
 
 ```bash
-git clone https://github.com/junyatakechi/oura-collection-app.git ~/.claude/skills/oura-collection-app
+git clone https://github.com/junyatakechi/oura-collection-app-skill.git ~/.claude/skills/oura-collection-app-skill
 ```
 
 ## セットアップ
 
-1. oura-api-generic-logic の README の「セットアップ」で、Ouraの認証情報を用意する。
-2. notion-cli-generic-logic の README の「セットアップ」で、Notionのトークンを用意し、記録先の5つのDBにIntegrationを接続する。
+1. oura-api-generic-logic-skill の README の「セットアップ」で、Ouraの認証情報を用意する。
+2. notion-cli-generic-logic-skill の README の「セットアップ」で、Notionのトークンを用意し、記録先の5つのDBにIntegrationを接続する。
 3. `.env.example` のキーを、プロジェクトのフォルダ直下（Claude Code を起動するフォルダ）の `.env` に足し、値を埋める。`.env` はプロジェクトのスキルで共有する。
 
 | キー | 中身 |
@@ -51,7 +51,7 @@ git clone https://github.com/junyatakechi/oura-collection-app.git ~/.claude/skil
 
    ```bash
    cd <プロジェクトのフォルダ>   # .env のあるフォルダ
-   uv run ~/.claude/skills/oura-collection-app/scripts/sync_oura_to_notion.py --dry-run
+   uv run ~/.claude/skills/oura-collection-app-skill/scripts/sync_oura_to_notion.py --dry-run
    ```
 
 ## 使い方

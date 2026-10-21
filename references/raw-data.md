@@ -11,7 +11,7 @@
 
 ## 道具
 
-`scripts/sync_oura_to_notion.py` が `fetch_many(..., full=False)` で取り、`_raw()` でJSONのまま書く。要約の仕方は oura-api-generic-logic の長大な時系列の要約の判断に従う。
+`scripts/sync_oura_to_notion.py` が `fetch_many(..., full=False)` で取り、`_raw()` でJSONのまま書く。要約の仕方は oura-api-generic-logic-skill の長大な時系列の要約の判断に従う。
 
 ## 理由
 
@@ -24,5 +24,5 @@
 
 ## 当てはまる範囲と限界
 
-- 2026-10-19に oura-api-generic-logic の生データの持ち方の判断から移した。何を記録に残すか・記録先の上限は、導入先の環境の事情で、Oura APIの文脈の判断ではないため。
-- 要約した生データからは、時系列そのものは復元できない。時系列が要るときは、oura-api-generic-logic の道具で全件を取り直す。
+- 2026-10-19に oura-api-generic-logic-skill の生データの持ち方の判断から移した。何を記録に残すか・記録先の上限は、導入先の環境の事情で、Oura APIの文脈の判断ではないため。
+- 要約した生データからは、時系列そのものは復元できない。時系列が要るときは、oura-api-generic-logic-skill の道具で全件を取り直す。

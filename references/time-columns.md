@@ -26,4 +26,4 @@
 
 ## 当てはまる範囲と限界
 
-- タグの2つの形式と終了時刻の有無は、oura-api-generic-logic のタグの判断に従う。
+- タグの2つの形式と終了時刻の有無は、oura-api-generic-logic-skill のタグの判断に従う。

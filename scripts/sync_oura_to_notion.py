@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # ///
-"""oura-collection-app: Oura Ring → Notion「OuraRing」配下5DBの同期。
+"""oura-collection-app-skill: Oura Ring → Notion「OuraRing」配下5DBの同期。
 
 使い方:
   uv run scripts/sync_oura_to_notion.py                      # 前日分を同期
@@ -12,8 +12,8 @@
   uv run scripts/sync_oura_to_notion.py --env-file <path>     # Oura認証情報ファイルを指定
 
 **判断はこのスキルに持たない。** Oura API側の事情(トークン・境界日・心拍・
-確定の遅れ・同一性・タグの2形式)は oura-api-generic-logic の判断と道具に、
-Notionの呼び方は notion-cli-generic-logic の判断と道具に従う。どちらの道具も写さず、
+確定の遅れ・同一性・タグの2形式)は oura-api-generic-logic-skill の判断と道具に、
+Notionの呼び方は notion-cli-generic-logic-skill の判断と道具に従う。どちらの道具も写さず、
 importして呼ぶ。このスキルが持つのは、導入先の環境(記録先のDB・列名・Ouraの項目との対応)と手順だけ。
 """
 import argparse
@@ -23,8 +23,8 @@ import sys
 from datetime import date, datetime, timedelta
 
 _SKILLS = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-sys.path.insert(0, os.path.join(_SKILLS, "oura-api-generic-logic", "scripts"))
-sys.path.insert(0, os.path.join(_SKILLS, "notion-cli-generic-logic", "scripts"))
+sys.path.insert(0, os.path.join(_SKILLS, "oura-api-generic-logic-skill", "scripts"))
+sys.path.insert(0, os.path.join(_SKILLS, "notion-cli-generic-logic-skill", "scripts"))
 import oura_records as R  # noqa: E402
 from oura_api import fetch_many  # noqa: E402
 from oura_auth import OuraAuthError, ensure_access_token  # noqa: E402
@@ -46,7 +46,7 @@ DS = EnvDataSources("OURA_COLLECTION",
 DATE_COLUMN = "対象日時"
 
 # 記録先の列名と型。conventions/notion-db.md が説明で、ここが正。
-# 列を変えたらNotion側と同時にここを直す(notion-cli-generic-logic のスキーマの変更の判断)。
+# 列を変えたらNotion側と同時にここを直す(notion-cli-generic-logic-skill のスキーマの変更の判断)。
 COLUMNS = {
     "daily": {
         "Name": "title", "対象日時": "date", "取得日時": "date",
@@ -137,7 +137,7 @@ def build_daily(day, endpoints):
     g = R.g
     return {
         "Name": day, "対象日時": day, "取得日時": _now_iso(),
-        # 睡眠: contributors はスコア(0-100)であって時間ではない(oura-api-generic-logic の睡眠の判断)
+        # 睡眠: contributors はスコア(0-100)であって時間ではない(oura-api-generic-logic-skill の睡眠の判断)
         "睡眠スコア": g(daily_sleep, "score"),
         "睡眠_合計睡眠スコア": g(daily_sleep, "contributors", "total_sleep"),
         "睡眠_深い睡眠スコア": g(daily_sleep, "contributors", "deep_sleep"),
@@ -164,7 +164,7 @@ def build_daily(day, endpoints):
         # 回復力
         "回復力レベル": g(resilience, "level"),
         "回復力_生データ": _raw(resilience),
-        # 心血管年齢(PWVは実データで入るか未確認。oura-api-generic-logic の確定の判断)
+        # 心血管年齢(PWVは実データで入るか未確認。oura-api-generic-logic-skill の確定の判断)
         "心血管年齢": g(cvage, "vascular_age"),
         "脈波伝播速度(PWV)": g(cvage, "pulse_wave_velocity"),
         # SpO2
@@ -277,7 +277,7 @@ class RecordedIds:
     """対象日に記録済みのOura record idを、(DB, 日)ごとに1回だけ引いて持つ。
 
     区間のレコードは同じ日に複数ありうるので、record id で重複を判定する
-    (oura-api-generic-logic のレコードの同一性の判断)。idは「生データ」列のJSONに入っている。
+    (oura-api-generic-logic-skill のレコードの同一性の判断)。idは「生データ」列のJSONに入っている。
     """
 
     def __init__(self):
@@ -299,7 +299,7 @@ def sync_one_day(day, daily_data, interval_data, dry_run, counters, recorded):
     log(f"=== {day} ===")
 
     # 日次サマリー: 数日遅れで確定する項目があるので、既にあっても上書きする
-    # (oura-api-generic-logic のデータが確定する時期の判断)。
+    # (oura-api-generic-logic-skill のデータが確定する時期の判断)。
     existing = _day_pages("daily", day)
     props = to_properties("daily", build_daily(day, daily_data))
     if existing:
@@ -346,14 +346,14 @@ def main():
     elif args.start_date and args.end_date:
         start, end = date.fromisoformat(args.start_date), date.fromisoformat(args.end_date)
     else:
-        # 既定: 前日分(データは翌朝に確定する。oura-api-generic-logic のデータが確定する時期の判断)
+        # 既定: 前日分(データは翌朝に確定する。oura-api-generic-logic-skill のデータが確定する時期の判断)
         start = end = date.today() - timedelta(days=1)
 
     counters = {f"{k}_{s}": 0 for k in DB_LABELS for s in ("create", "skip")}
     counters["daily_update"] = 0
 
     # 期間全体を1回で取り、日ごとの振り分けはメモリ上で行う。境界日を取りこぼさないよう
-    # 前後1日を足す(oura-api-generic-logic のAPIの呼び方・境界日の取りこぼしの判断)。
+    # 前後1日を足す(oura-api-generic-logic-skill のAPIの呼び方・境界日の取りこぼしの判断)。
     token = ensure_access_token(args.env_file)
     fetch_start, fetch_end = R.padded_range(start, end)
     log(f"Oura APIから {fetch_start}〜{fetch_end} のデータを一括取得中...")

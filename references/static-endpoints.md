@@ -7,7 +7,7 @@
 ## 答え
 
 1. **`ring_configuration`・`personal_info` は、DBに記録しない。**
-2. 要るときに、oura-api-generic-logic の `oura_api.py` で取る。
+2. 要るときに、oura-api-generic-logic-skill の `oura_api.py` で取る。
 
 ## 理由
 
