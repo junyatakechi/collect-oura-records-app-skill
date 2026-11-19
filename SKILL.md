@@ -2,7 +2,7 @@
 name: oura-collection-app-skill
 description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.3.4"
+  version: "0.3.5"
   repository: "https://github.com/junyatakechi/oura-collection-app-skill"
   design: "人の判断を切り出すAgent Skillsの設計_v3.6.0"
   design-url: "https://app.notion.com/p/3eaf2fd6925e8102b86fee3b6b3dd5a3"
@@ -37,30 +37,23 @@ uv run <skill-dir>/scripts/sync_oura_to_notion.py --start-date 2026-05-01 --end-
 uv run <skill-dir>/scripts/sync_oura_to_notion.py --dry-run             # 書き込まず件数だけ
 ```
 
-   - 日次サマリーは既にあっても上書きし、区間（睡眠区間・セッション・ワークアウト・タグ）は記録済みの record id を飛ばす。何度実行しても重複しない。
+   - 何で重複を判定し、既にあったらどうするかは、`G1`に従う。
    - 何をどの列に書くかは、`C1`に従う。
-4. スクリプトが止まったら、先へ進まず、README の「セットアップ」を案内する。
-
-| 合図 | 足りないもの |
-|---|---|
-| `環境変数にも <起動フォルダ>/.env にも OURA_COLLECTION_DB_..._URL が無い` | 記録先のDBのURL |
-| `client_id/client_secret is missing`・`refresh_token is missing`・`Oura token endpoint error` | Ouraの認証情報。案内することは、`G1`に従う |
-| `NOTION_TOKEN is not set`・記録先のDBで404 | Notionのトークン、または記録先のDBへのIntegrationの接続。案内することは、`G2`に従う |
-
+4. スクリプトが止まったら、先へ進まない。記録先のDBのURLが無いときは、README の「セットアップ」を案内する。Oura・Notionの道具が返した失敗が、どの設定の不足によるかは、`G1`・`G2`に従う。
 5. 列を足す・変えるときは、`G1`・`G2`を参照し、`J2`・`J4`に聞いてから、`C1`に従ってスクリプトの `COLUMNS`・`build_*` とNotion側を同時に直す。レスポンスを見て、推測で列を足さない。
 6. `ring_configuration`・`personal_info` の記録を頼まれたら、`J3`に聞く。
 
 ## 2. 取れなかった分を見分ける（→ 要件3）
 
 1. 出力に `[警告] ○○ の取得に失敗` や失敗した日があれば、`J1`に聞く。
-2. `[警告]` があれば、どのエンドポイントが取れなかったかを控える。`daily_resilience`・`daily_cardiovascular_age`・`vo2max` だけなら、認可のスコープ不足として`G1`に従う。
+2. `[警告]` があれば、どのエンドポイントが取れなかったかを控える。特定のエンドポイントだけが取れないときに何と読むかは、`G1`に従う。
 3. 失敗した日があれば、その日を控える。同期済みとして扱わない。
-   - `vo2max`・推奨就寝が直近の日で空なのは、取得漏れではない。
+   - 直近の日で空の項目が取得漏れかは、`G1`に従う。
 
 ## 3. 伝える
 
 1. チャットへは、DBごとの作成・更新・スキップの件数と、手順2で控えたエンドポイントと日を返す。依頼元のスキルから頼まれたときは、依頼元が欲しい結果を満たしたか確かめられるように、同じ内容を返す。
-   - 参照したロジックスキルの名前と、実際に使った版（判断先の `metadata.version`）を添えられるようにしておく。どの判断で記録したかを後から辿るため。
+   - 参照したロジックスキルの名前と、実際に使った版（判断先の `metadata.version`）を添えられるようにしておく。
 
 # 中核判断の委任表
 
