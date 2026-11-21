@@ -5,13 +5,12 @@
 
 ## DB
 
-Notionの「OuraRing」ページ配下の5つ。URLは起動フォルダの `.env` にある。
+Notionの「OuraRing」ページ配下の4つ。URLは起動フォルダの `.env` にある。Ouraのセッション（`session`）は記録しない（指示者が、2026-11-21 に、Oura セッションのDBを要らないとして消したため）。
 
 | DB | URLのキー | 1件の単位 | Ouraのエンドポイント | 既にあったら |
 |---|---|---|---|---|
 | Oura 日次サマリー | `OURA_COLLECTION_DB_DAILY_URL` | 1日 | `daily_sleep`・`daily_activity`・`daily_readiness`・`daily_resilience`・`daily_cardiovascular_age`・`daily_spo2`・`daily_stress`・`vo2max`・`sleep_time`・`heartrate` | `対象日時` が同じページを上書き |
 | Oura 睡眠区間 | `OURA_COLLECTION_DB_SLEEP_URL` | 1区間 | `sleep` | 生データに同じ record id があれば飛ばす |
-| Oura セッション | `OURA_COLLECTION_DB_SESSION_URL` | 1セッション | `session` | 同上 |
 | Oura ワークアウト | `OURA_COLLECTION_DB_WORKOUT_URL` | 1件 | `workout` | 同上 |
 | Oura タグ | `OURA_COLLECTION_DB_TAG_URL` | 1件 | `enhanced_tag`・`tag` | 同上 |
 
@@ -26,7 +25,6 @@ Notionの「OuraRing」ページ配下の5つ。URLは起動フォルダの `.en
 |---|---|
 | 日次サマリー | `取得日時`（date）、睡眠のスコア8列（number）、活動・準備度・心血管年齢・SpO2・ストレス・VO2Max・心拍の数値（number）、`回復力レベル`・`ストレス日次サマリ`・`推奨就寝_ステータス`（select）、`推奨就寝_推奨`（rich_text）、`睡眠_生データ`・`活動_生データ`・`準備度_生データ`・`回復力_生データ`（rich_text） |
 | 睡眠区間 | `開始時刻`・`終了時刻`（date）、`種別`（select）、`効率`・秒の7列・心拍・HRV・呼吸数（number）、`生データ`（rich_text） |
-| セッション | `開始`・`終了`（date）、`種別`・`気分`（select）、`生データ`（rich_text） |
 | ワークアウト | `開始`・`終了`（date）、`種目`・`ラベル`（rich_text）、`強度`・`ソース`（select）、`消費カロリー`・`距離_m`（number）、`生データ`（rich_text） |
 | タグ | `時刻`（date。開始と終了の期間）、`タグ種別`（multi_select）、`内容`（rich_text）、`形式`（select。`enhanced_tag` か `tag(旧)`）、`生データ`（rich_text） |
 
@@ -35,7 +33,7 @@ Notionの「OuraRing」ページ配下の5つ。URLは起動フォルダの `.en
 
 ## 時間を持つ列の形
 
-睡眠区間・セッション・ワークアウトは開始・終了の2列、タグだけdate型1列の期間で持つ。なぜこの形かは、まだ切り出していない判断（[references/time-columns.md](../references/time-columns.md)）にある。
+睡眠区間・ワークアウトは開始・終了の2列、タグだけdate型1列の期間で持つ。なぜこの形かは、まだ切り出していない判断（[references/time-columns.md](../references/time-columns.md)）にある。
 
 ## 記録の限界
 

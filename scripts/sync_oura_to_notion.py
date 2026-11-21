@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # ///
-"""oura-collection-app-skill: Oura Ring → Notion「OuraRing」配下5DBの同期。
+"""oura-collection-app-skill: Oura Ring → Notion「OuraRing」配下4DBの同期。
 
 使い方:
   uv run scripts/sync_oura_to_notion.py                      # 前日分を同期
@@ -41,7 +41,7 @@ if hasattr(sys.stdout, "reconfigure"):
 # ---------------------------------------------------------------- 記録先(導入先の環境)
 # DBのURLは起動フォルダの .env(環境変数が優先)の OURA_COLLECTION_DB_<KEY>_URL。
 DS = EnvDataSources("OURA_COLLECTION",
-                    ("daily", "sleep", "session", "workout", "tag"))
+                    ("daily", "sleep", "workout", "tag"))
 
 DATE_COLUMN = "対象日時"
 
@@ -75,10 +75,6 @@ COLUMNS = {
         "最低心拍": "number", "平均HRV": "number", "平均呼吸数": "number",
         "生データ": "rich_text",
     },
-    "session": {
-        "Name": "title", "対象日時": "date", "開始": "date", "終了": "date",
-        "種別": "select", "気分": "select", "生データ": "rich_text",
-    },
     "workout": {
         "Name": "title", "対象日時": "date", "開始": "date", "終了": "date",
         "種目": "rich_text", "強度": "select", "消費カロリー": "number",
@@ -102,12 +98,11 @@ DAILY_ENDPOINTS = [
     "daily_cardiovascular_age", "daily_spo2", "daily_stress", "vo2max",
     "sleep_time", "heartrate",
 ]
-INTERVAL_ENDPOINTS = ["sleep", "session", "workout", "enhanced_tag", "tag"]
+INTERVAL_ENDPOINTS = ["sleep", "workout", "enhanced_tag", "tag"]
 
 DB_LABELS = {
     "daily": "Oura 日次サマリー",
     "sleep": "Oura 睡眠区間",
-    "session": "Oura セッション",
     "workout": "Oura ワークアウト",
     "tag": "Oura タグ",
 }
@@ -201,15 +196,6 @@ def build_sleep(record):
         "平均HRV": record.get("average_hrv"),
         "平均呼吸数": record.get("average_breath"),
         "生データ": _raw(record),
-    }
-
-
-def build_session(record):
-    day, kind = record.get("day"), record.get("type")
-    return {
-        "Name": f"{day} {kind}", "対象日時": day,
-        "開始": record.get("start_datetime"), "終了": record.get("end_datetime"),
-        "種別": kind, "気分": record.get("mood"), "生データ": _raw(record),
     }
 
 
@@ -316,7 +302,6 @@ def sync_one_day(day, daily_data, interval_data, dry_run, counters, recorded):
     # 区間: record id が記録済みなら飛ばす
     plans = [
         ("sleep", "sleep", build_sleep),
-        ("session", "session", build_session),
         ("workout", "workout", build_workout),
         ("tag", "enhanced_tag", lambda r: build_tag(r, "enhanced_tag")),
         ("tag", "tag", lambda r: build_tag(r, "tag")),
