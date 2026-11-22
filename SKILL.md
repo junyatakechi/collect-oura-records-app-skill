@@ -2,9 +2,9 @@
 name: oura-collection-app-skill
 description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.5.2"
-  repository: "https://github.com/junyatakechi/oura-collection-app-skill"
-  design: "人の判断を切り出すAgent Skillsの設計_v5.0.0"
+  skill-version: "0.5.3"
+  design-name: "人の判断を切り出すAgent Skillsの設計"
+  design-version: "6.0.1"
   design-url: "https://app.notion.com/p/3eaf2fd6925e8102b86fee3b6b3dd5a3"
   dependencies: >-
     github:junyatakechi/oura-api-generic-logic-skill@^0.3.0,
@@ -22,7 +22,7 @@ metadata:
 ### 1-1. 期間を決めて記録する
 
 1. `G1`・`G2`を参照する。
-2. 何日の分を取るかを決める。ユーザーや依頼元のスキルが期間を言ったら、その期間を渡す。指定が無いときの対象日と、今日の行（昨夜の睡眠）が要るときの渡し方は、`G1`に従う。
+2. 何日の分を取るかを決める。指示者や依頼元のスキルが期間を言ったら、その期間を渡す。指定が無いときの対象日と、今日の行（昨夜の睡眠）が要るときの渡し方は、`G1`に従う。
 3. 同期する。
 
 ```bash
@@ -56,7 +56,7 @@ uv run <skill-dir>/scripts/sync_oura_to_notion.py --dry-run             # 書き
 ## 4. 伝える
 
 1. チャットへは、DBごとの作成・更新・スキップの件数と、3-1で控えたエンドポイントと日を返す。依頼元のスキルから頼まれたときは、依頼元が欲しい結果を満たしたか確かめられるように、同じ内容を返す。
-   - 参照したロジックスキルの名前と、実際に使った版（判断先の `metadata.version`）を添えられるようにしておく。
+   - 参照したロジックスキルの名前と、実際に使った版（判断先の `metadata.skill-version`）を添えられるようにしておく。
 
 # 中核判断の委任表
 
