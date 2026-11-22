@@ -2,7 +2,7 @@
 name: oura-collection-app-skill
 description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.5.0"
+  version: "0.5.1"
   repository: "https://github.com/junyatakechi/oura-collection-app-skill"
   design: "人の判断を切り出すAgent Skillsの設計_v4.0.0"
   design-url: "https://app.notion.com/p/3eaf2fd6925e8102b86fee3b6b3dd5a3"
@@ -66,10 +66,10 @@ uv run <skill-dir>/scripts/sync_oura_to_notion.py --dry-run             # 書き
 
 | ID | 聞きたい事 | 判断先 | 欲しい答えの形 |
 |---|---|---|---|
-| J1 | 一部のエンドポイントや日の取得に失敗したとき、続けるか止めるか | `partial-failure.md` | 続ける範囲と、終了の仕方 |
-| J2 | 時間を持つ記録を、どの列の形で持つか | `time-columns.md` | DBごとの列の形 |
-| J3 | 変わることが少ないデータ（`ring_configuration`・`personal_info`）を、DBに記録するか | `static-endpoints.md` | `記録する`/`記録しない` と、要るときの取り方 |
-| J4 | 生データを、記録にどう残すか | `raw-data.md` | 残す形と、要約するか |
+| J1 | 一部のエンドポイントや日の取得に失敗したとき、続けるか止めるか | [partial-failure.md](references/partial-failure.md) | 続ける範囲と、終了の仕方 |
+| J2 | 時間を持つ記録を、どの列の形で持つか | [time-columns.md](references/time-columns.md) | DBごとの列の形 |
+| J3 | 変わることが少ないデータ（`ring_configuration`・`personal_info`）を、DBに記録するか | [static-endpoints.md](references/static-endpoints.md) | `記録する`/`記録しない` と、要るときの取り方 |
+| J4 | 生データを、記録にどう残すか | [raw-data.md](references/raw-data.md) | 残す形と、要約するか |
 
 # 一般的な業務知識の参照表
 
@@ -86,7 +86,7 @@ uv run <skill-dir>/scripts/sync_oura_to_notion.py --dry-run             # 書き
 
 | ID | 取り決め | 種類 | ファイル |
 |---|---|---|---|
-| C1 | 記録先のDBと列・記録の限界 | 環境の取り決め | `conventions/notion-db.md` |
+| C1 | 記録先のDBと列・記録の限界 | 環境の取り決め | [conventions/notion-db.md](conventions/notion-db.md) |
 
 # このスキルの設計上の決まりごと
 
