@@ -2,9 +2,9 @@
 name: oura-collection-app-skill
 description: "文脈: Oura Ringの記録。種類: アプリケーションスキル。使う場面: 名前で指名されたときだけ使い、会話の内容からは選ばない。"
 metadata:
-  version: "0.5.1"
+  version: "0.5.2"
   repository: "https://github.com/junyatakechi/oura-collection-app-skill"
-  design: "人の判断を切り出すAgent Skillsの設計_v4.0.0"
+  design: "人の判断を切り出すAgent Skillsの設計_v5.0.0"
   design-url: "https://app.notion.com/p/3eaf2fd6925e8102b86fee3b6b3dd5a3"
   dependencies: >-
     github:junyatakechi/oura-api-generic-logic-skill@^0.3.0,
