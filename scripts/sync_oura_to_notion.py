@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # ///
-"""oura-collection-app-skill: Oura Ring → Notion「OuraRing」配下4DBの同期。
+"""collect-oura-records-app-skill: Oura Ring → Notion「OuraRing」配下4DBの同期。
 
 使い方:
   uv run scripts/sync_oura_to_notion.py                      # 前日分を同期

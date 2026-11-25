@@ -1,4 +1,4 @@
-# oura-collection-app-skill
+# collect-oura-records-app-skill
 
 Oura Ring のデータを取得し、Notionの「OuraRing」配下の4つのDB（日次サマリー・睡眠区間・ワークアウト・タグ）へ記録するアプリケーションスキル。
 
@@ -12,7 +12,7 @@ Oura Ring のデータを取得し、Notionの「OuraRing」配下の4つのDB�
 ## インストール
 
 ```bash
-git clone https://github.com/junyatakechi/oura-collection-app-skill.git ~/.claude/skills/oura-collection-app-skill
+git clone https://github.com/junyatakechi/collect-oura-records-app-skill.git ~/.claude/skills/collect-oura-records-app-skill
 ```
 
 特定のプロジェクトだけで使うなら、`<プロジェクト>/.claude/skills/` の中でクローンする。
@@ -27,7 +27,7 @@ git clone https://github.com/junyatakechi/oura-collection-app-skill.git ~/.claud
 
    ```bash
    cd <プロジェクトのフォルダ>   # .env のあるフォルダ
-   uv run ~/.claude/skills/oura-collection-app-skill/scripts/sync_oura_to_notion.py --dry-run
+   uv run ~/.claude/skills/collect-oura-records-app-skill/scripts/sync_oura_to_notion.py --dry-run
    ```
 
 ## 使い方
@@ -35,5 +35,5 @@ git clone https://github.com/junyatakechi/oura-collection-app-skill.git ~/.claud
 スキル名だけを指定して呼ぶ。指名しないと、このスキルは読み込まれない。
 
 ```
-/oura-collection-app-skill
+/collect-oura-records-app-skill
 ```
